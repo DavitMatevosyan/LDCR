@@ -1,4 +1,4 @@
-﻿namespace LDCR.Infrastructure.DataAccessUtils;
+﻿namespace LDCR.Domain.BaseEntities;
 
 public class AuditableEntity : EntityModel
 {
@@ -9,9 +9,4 @@ public class AuditableEntity : EntityModel
     public Guid ModifiedBy { get; set; }
 
     public bool IsObsolete { get; set; } = false;
-}
-
-public class EntityModel
-{
-    public Guid Id { get; set; }
 }

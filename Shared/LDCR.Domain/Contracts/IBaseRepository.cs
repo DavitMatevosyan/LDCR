@@ -1,7 +1,7 @@
-﻿using LDCR.Infrastructure.DataAccessUtils;
+﻿using LDCR.Domain.BaseEntities;
 using System.Linq.Expressions;
 
-namespace LDCR.Infrastructure.Contracts;
+namespace LDCR.Domain.Contracts;
 
 public interface IBaseRepository<T> where T : EntityModel
 {

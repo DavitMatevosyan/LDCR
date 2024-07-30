@@ -1,4 +1,4 @@
-﻿using LDCR.Infrastructure.DataAccessUtils;
+﻿using LDCR.Domain.BaseEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

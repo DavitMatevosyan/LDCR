@@ -1,5 +1,5 @@
-﻿using LDCR.Infrastructure.Contracts;
-using LDCR.Infrastructure.DataAccessUtils;
+﻿using LDCR.Domain.BaseEntities;
+using LDCR.Domain.Contracts;
 using LDCR.Shared.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;

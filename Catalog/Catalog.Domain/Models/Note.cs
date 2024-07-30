@@ -1,4 +1,4 @@
-﻿using LDCR.Infrastructure.DataAccessUtils;
+﻿using LDCR.Domain.BaseEntities;
 
 namespace Catalog.Domain.Models;
 

@@ -1,5 +1,5 @@
 ﻿using Catalog.Domain.Models;
-using LDCR.Infrastructure.Contracts;
+using LDCR.Domain.Contracts;
 
 namespace Catalog.Domain.RepositoryContracts;
 

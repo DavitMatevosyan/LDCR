@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LDCR.Shared
+namespace Catalog.Application.Results
 {
-    internal class InternalControllerFeatureProvider : ControllerFeatureProvider
+    public class CommandResult
     {
     }
 }
