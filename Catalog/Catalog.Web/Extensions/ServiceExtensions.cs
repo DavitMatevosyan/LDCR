@@ -1,6 +1,7 @@
 ﻿using Catalog.Domain.RepositoryContracts;
 using Catalog.Infrastructure;
 using Catalog.Infrastructure.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Catalog.Web.Extensions;
 

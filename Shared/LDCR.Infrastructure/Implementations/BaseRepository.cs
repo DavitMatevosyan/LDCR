@@ -10,14 +10,14 @@ public class BaseRepository<T>(ModuleDbContext context) : IBaseRepository<T> whe
 {
     private readonly ModuleDbContext context = context;
 
-    public async Task<T> GetAsync(Guid id, bool asNoTracking = false, CancellationToken token = default)
+    public async virtual Task<T> GetAsync(Guid id, bool asNoTracking = false, CancellationToken token = default)
         => await context
             .Set<T>()
             .AsTracking(asNoTracking ? QueryTrackingBehavior.NoTracking : QueryTrackingBehavior.TrackAll)
             .FirstOrDefaultAsync(x => x.Id == id, token) 
                 ?? throw new KeyNotFoundException($"The entity with given id: {id} is not found");
 
-    public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate, bool asNoTracking = false, CancellationToken token = default)
+    public async virtual Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate, bool asNoTracking = false, CancellationToken token = default)
         => await context
             .Set<T>()
             .AsTracking(asNoTracking ? QueryTrackingBehavior.NoTracking : QueryTrackingBehavior.TrackAll)
@@ -25,7 +25,7 @@ public class BaseRepository<T>(ModuleDbContext context) : IBaseRepository<T> whe
             .ToListAsync(token)
                 ?? throw new KeyNotFoundException($"The entity with given predicate is not found");
 
-    public async Task<T> AddAsync(T entity, CancellationToken token)
+    public async virtual Task<T> AddAsync(T entity, CancellationToken token)
         => (await context.Set<T>().AddAsync(entity, token)).Entity;
 
     public async Task DeleteAsync(Guid id, CancellationToken token)
@@ -36,7 +36,7 @@ public class BaseRepository<T>(ModuleDbContext context) : IBaseRepository<T> whe
         context.Set<T>().Remove(entity);
     }
 
-    public async Task UpdateAsync(Guid id, T newItem, CancellationToken token)
+    public async virtual Task UpdateAsync(Guid id, T newItem, CancellationToken token)
     {
         var entity = await GetAsync(id, true, token);
 
