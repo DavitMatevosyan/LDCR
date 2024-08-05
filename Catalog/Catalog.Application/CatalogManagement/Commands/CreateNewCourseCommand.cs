@@ -1,10 +1,12 @@
-﻿using Catalog.Application.Results;
+﻿using Catalog.Domain.Models;
 using Catalog.Domain.RepositoryContracts;
+using LDCR.Shared;
+using LDCR.Shared.Results;
 using MediatR;
 
 namespace Catalog.Application.CatalogManagement.Commands;
 
-public class CreateNewCourseCommand : IRequest<CommandResult>
+public class CreateNewCourseCommand : BaseCommand<CreateNewCourseCommand, Course>, IRequest<CommandResult>
 {
     public required string Name { get; set; }
     public required string Code { get; set; }
@@ -18,11 +20,13 @@ public class CreateNewCourseCommandHandler(ICourseRepository courseRepository) :
 
     public async Task<CommandResult> Handle(CreateNewCourseCommand request, CancellationToken cancellationToken)
     {
+        var result = new CommandResult(request);
 
-        //request.ada
-        //courseRepository.AddAsync()
+        var course = request.ToEntity();
 
-        throw new NotImplementedException();
+        await courseRepository.AddAsync(course, cancellationToken);
+
+        return result;
     }
 }
 

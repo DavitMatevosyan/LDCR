@@ -1,15 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Catalog.Application.CatalogManagement.Commands;
+using Catalog.Web.Dtos;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Catalog.Web.Controllers
+namespace Catalog.Web.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ProjectCatalogController(IMediator mediator) : ApiController(mediator)
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProjectCatalogController : ControllerBase
+    [HttpPost("Course")]
+    public IActionResult AddCourse([FromBody] CreateCourseDto dto)
     {
-        [HttpGet("Project")]
-        public IActionResult GetAll()
-        {
-            return Ok(new[] { "asd", "xzc" });
-        }
+        CreateNewCourseCommand command = dto.ToTarget();
+
+        mediator.Send(command);
+
+        return Ok(new[] { "asd", "xzc" });
     }
 }

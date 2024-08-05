@@ -1,11 +1,14 @@
-﻿using LDCR.Shared.Infrastructure;
+﻿using Catalog.Domain.Models;
+using LDCR.Shared.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Catalog.Infrastructure
+namespace Catalog.Infrastructure;
+
+public class CatalogDbContext(DbContextOptions opts, IConfiguration configuration) : ModuleDbContext(opts, configuration)
 {
-    public class CatalogDbContext(DbContextOptions opts, IConfiguration configuration) : ModuleDbContext(opts, configuration)
-    {
-        protected override string Schema => "Catalog";
-    }
+    protected override string Schema => "Catalog";
+
+    public DbSet<Course> Courses { get; set; }
+
 }
