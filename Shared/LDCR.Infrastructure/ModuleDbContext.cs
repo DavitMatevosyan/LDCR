@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace LDCR.Shared.Infrastructure;
 
-public abstract class ModuleDbContext(DbContextOptions opts, IConfiguration configuration) : DbContext(opts)
+public abstract class ModuleDbContext(IConfiguration configuration, DbContextOptions opts) : DbContext(opts)
 {
     private readonly IConfiguration configuration = configuration;
 
@@ -17,7 +17,7 @@ public abstract class ModuleDbContext(DbContextOptions opts, IConfiguration conf
 
         builder.UseSqlServer(configuration.GetConnectionString(Schema), options =>
         {
-
+            options.MigrationsHistoryTable("EFMigrationHistory", Schema);
         });
     }
 

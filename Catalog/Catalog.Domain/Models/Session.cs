@@ -11,8 +11,10 @@ public class Session : AuditableEntity
     public TimeSpan Duration { get; set; }
     public RepetitionRule RepetitionRule { get; set; }
 
+    public Guid SessionReferenceId { get; set; }
     public SessionReference? Reference { get; set; }
 
+    public required Guid CourseId { get; set; }
     public required Course Course { get; set; }
 
     public IEnumerable<Homework>? Homeworks { get; set; }

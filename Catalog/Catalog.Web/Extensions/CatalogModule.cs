@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Catalog.Web.Extensions;
 
-public class CatalogModule : BaseModule
+public class Catalog : BaseModule
 {
     public override void RegisterServices(WebApplicationBuilder builder)
     {
@@ -19,7 +19,7 @@ public class CatalogModule : BaseModule
         builder.Services.AddMediatR(config =>
         {
             config.AutoRegisterRequestProcessors = true;
-            config.RegisterServicesFromAssemblies(Assembly.Load("Catalog.Web"),
+            config.RegisterServicesFromAssemblies(Assembly.Load("Catalog"),
                                                   Assembly.Load("Catalog.Application"));
         });
 
@@ -36,6 +36,5 @@ public class CatalogModule : BaseModule
     {
         builder.Services.AddDbContext<CatalogDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString(ModuleConstants.Catalog)));
-
     }
 }

@@ -11,15 +11,15 @@ public class ModuleLoader(IConfiguration configuration)
 
     public IEnumerable<BaseModule> LoadModules()
     {
-
         // convert to composite config class and base module class
-        var moduleConfigs = configuration.GetSection("Modules").Get<List<BaseModule>>() ?? throw new ConfigurationsNotFoundException("The configurations were not found");
+        var moduleSettings = configuration.GetSection("Modules").Get<List<ModuleSettings>>()
+                ?? throw new ConfigurationsNotFoundException("The configurations were not found");
 
         List<Assembly> modules = [];
-        foreach (var module in moduleConfigs)
+        foreach (var module in moduleSettings)
         {
             if (module.Enabled)
-                modules.Add(Assembly.Load(module.AssemblyName));
+                modules.Add(Assembly.Load(module.Name));
         }
 
         var moduleTypes = modules
@@ -28,11 +28,14 @@ public class ModuleLoader(IConfiguration configuration)
 
         foreach (var moduleType in moduleTypes)
         {
-            var moduleConfig = moduleConfigs.FirstOrDefault(mc => mc.AssemblyName == moduleType.AssemblyQualifiedName);
+            var moduleConfig = moduleSettings.FirstOrDefault(mc => mc.Name == moduleType.Name);
 
             if (moduleConfig != null)
             {
-                yield return (BaseModule)Activator.CreateInstance(moduleType)!;
+                var module = (BaseModule)Activator.CreateInstance(moduleType)!;
+                module.ModuleSettings = moduleConfig;
+
+                yield return module;
             }
         }
 

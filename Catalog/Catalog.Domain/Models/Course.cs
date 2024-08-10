@@ -6,4 +6,6 @@ public class Course : AuditableEntity
 {
     public required string Name { get; set; }
     public required string Code { get; set; }
+
+    public ICollection<Session>? Sessions { get; set; }
 }
