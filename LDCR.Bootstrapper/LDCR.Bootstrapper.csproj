@@ -5,17 +5,13 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="appsettings.local.json" />
-  </ItemGroup>
-
+	
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Catalog\Catalog.Web\Catalog.Web.csproj" />
+    <ProjectReference Include="..\Catalog\Catalog.Api\Catalog.Api.csproj" />
   </ItemGroup>
 
 </Project>

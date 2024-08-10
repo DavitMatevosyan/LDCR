@@ -19,7 +19,7 @@ public class ModuleLoader(IConfiguration configuration)
         foreach (var module in moduleSettings)
         {
             if (module.Enabled)
-                modules.Add(Assembly.Load(module.Name));
+                modules.Add(Assembly.Load($"{module.Name}.Api"));
         }
 
         var moduleTypes = modules

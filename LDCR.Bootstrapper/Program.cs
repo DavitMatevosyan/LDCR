@@ -1,5 +1,7 @@
 using LDCR.Infrastructure.Controllers;
 using LDCR.Infrastructure.Extensions;
+using LDCR.Shared.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSharedInfrastructure();
 
 var modules = new ModuleLoader(builder.Configuration).LoadModules();
+
+builder.Services.AddDbContext<ModuleDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Master")));
 
 foreach (var moduleConfig in modules)
 {

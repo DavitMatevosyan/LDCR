@@ -6,17 +6,22 @@ using Microsoft.Extensions.Configuration;
 
 namespace Catalog.Infrastructure;
 
-public class CatalogDbContext(IConfiguration config, DbContextOptions opts) : ModuleDbContext(config, opts)
+public class CatalogDbContext : ModuleDbContext
 {
-    protected override string Schema => "Catalog";
+    public CatalogDbContext(DbContextOptions opts, IConfiguration configurtion) : base(opts, configurtion)
+    {
+        Schema = "Catalog";
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-
         modelBuilder.ApplyConfiguration(new CourseConfiguration());
     }
 
-    public DbSet<Course> Courses { get; set; }
+    protected override void OnConfiguring(DbContextOptionsBuilder builder)
+    {
+        base.OnConfiguring(builder);
+    }
 
+    public DbSet<Course> Courses { get; set; }
 }

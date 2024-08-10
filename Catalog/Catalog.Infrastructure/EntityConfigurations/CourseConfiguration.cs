@@ -16,10 +16,9 @@ internal class CourseConfiguration : IEntityTypeConfiguration<Course>
 
         builder.Property(x => x.Name)
             .IsRequired()
-            .HasMaxLength(50); 
+            .HasMaxLength(50);
 
-        builder.HasIndex(x => x.Code)
-            .IsUnique();
+        builder.HasIndex(x => x.Code);
 
         builder.HasMany(x => x.Sessions)
             .WithOne(x => x.Course);
@@ -31,16 +30,19 @@ internal class CourseConfiguration : IEntityTypeConfiguration<Course>
         => [
             new()
             {
+                Id = Guid.NewGuid(),
                 Code = "CS101",
                 Name = "Intro to CS"
             },
             new()
             {
+                Id = Guid.NewGuid(),
                 Code = "CS201",
                 Name = "Programming Details"
             },
             new()
             {
+                Id = Guid.NewGuid(),
                 Code = "CS301",
                 Name = "Pragmatic Programmer"
             }

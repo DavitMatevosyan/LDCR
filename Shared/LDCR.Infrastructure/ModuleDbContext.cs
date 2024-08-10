@@ -4,11 +4,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace LDCR.Shared.Infrastructure;
 
-public abstract class ModuleDbContext(IConfiguration configuration, DbContextOptions opts) : DbContext(opts)
+public class ModuleDbContext(DbContextOptions opts, IConfiguration configuration) : DbContext(opts)
 {
-    private readonly IConfiguration configuration = configuration;
+    protected readonly IConfiguration configuration = configuration;
 
-    protected abstract string Schema { get; }
+    protected string? Schema { get; init; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
@@ -18,6 +18,7 @@ public abstract class ModuleDbContext(IConfiguration configuration, DbContextOpt
         builder.UseSqlServer(configuration.GetConnectionString(Schema), options =>
         {
             options.MigrationsHistoryTable("EFMigrationHistory", Schema);
+            options.MigrationsAssembly($"{Schema}.Infrastructure");
         });
     }
 
@@ -27,7 +28,6 @@ public abstract class ModuleDbContext(IConfiguration configuration, DbContextOpt
             modelBuilder.HasDefaultSchema(Schema);
 
         base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

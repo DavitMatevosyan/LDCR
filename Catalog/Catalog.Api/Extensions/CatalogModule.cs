@@ -19,7 +19,7 @@ public class Catalog : BaseModule
         builder.Services.AddMediatR(config =>
         {
             config.AutoRegisterRequestProcessors = true;
-            config.RegisterServicesFromAssemblies(Assembly.Load("Catalog"),
+            config.RegisterServicesFromAssemblies(Assembly.Load("Catalog.Api"),
                                                   Assembly.Load("Catalog.Application"));
         });
 
