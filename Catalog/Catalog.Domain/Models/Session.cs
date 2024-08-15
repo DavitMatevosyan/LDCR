@@ -8,15 +8,11 @@ public class Session : AuditableEntity
     public required string Topic { get; set; }
     public string? Description { get; set; }
     public DateTime StartDate { get; set; }
-    public TimeSpan Duration { get; set; }
-    public RepetitionRule RepetitionRule { get; set; }
 
-    public Guid SessionReferenceId { get; set; }
-    public SessionReference? Reference { get; set; }
+    public required Guid? CourseId { get; set; }
+    public Course Course { get; set; } = null!;
 
-    public required Guid CourseId { get; set; }
-    public required Course Course { get; set; }
-
+    public IEnumerable<SessionReference>? SessionReferences { get; set; }
     public IEnumerable<Homework>? Homeworks { get; set; }
     public IEnumerable<Note>? Notes { get; set; }
 }

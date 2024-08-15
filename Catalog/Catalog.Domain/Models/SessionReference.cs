@@ -4,6 +4,8 @@ namespace Catalog.Domain.Models;
 
 public class SessionReference : EntityModel
 {
-    public IEnumerable<Session>? Sessions { get; set; }
-    public IEnumerable<string>? References { get; set; } // url, document, text
+    public string? Reference { get; set; } // url, document, text
+
+    public Guid SessionId { get; set; }
+    public Session Session { get; set; } = null!;
 }

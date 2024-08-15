@@ -6,6 +6,6 @@ public class Note : AuditableEntity
 {
     public required string Description { get; set; }
 
-
-    public required Session Session { get; set; }
+    public Guid? SessionId { get; set; }
+    public Session? Session { get; set; }
 }
