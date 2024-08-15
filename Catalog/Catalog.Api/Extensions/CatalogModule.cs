@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace Catalog.Web.Extensions;
 
@@ -14,22 +13,14 @@ public class Catalog : BaseModule
     public override void RegisterServices(WebApplicationBuilder builder)
     {
         base.RegisterServices(builder);
+
         // Module specific additional services
-
-        builder.Services.AddMediatR(config =>
-        {
-            config.AutoRegisterRequestProcessors = true;
-            config.RegisterServicesFromAssemblies(Assembly.Load("Catalog.Api"),
-                                                  Assembly.Load("Catalog.Application"));
-        });
-
         builder.Services.AddRepositoryServices();
     }
 
-    public override void ConfigureMiddlewares(WebApplication app)
+    protected override void ConfigureMiddlewares(IApplicationBuilder app)
     {
-        base.ConfigureMiddlewares(app);
-        // add additional middlewares if necessary
+
     }
 
     protected override void AddDatabaseEngine(WebApplicationBuilder builder)

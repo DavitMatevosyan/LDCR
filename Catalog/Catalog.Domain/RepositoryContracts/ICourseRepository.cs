@@ -15,10 +15,6 @@ public interface INoteRepository : IBaseRepository<Note>
 {
 }
 
-public interface ISessionRepository : IBaseRepository<Session>
-{
-}
-
 public interface ISessionReferenceRepository : IBaseRepository<SessionReference>
 {
 }

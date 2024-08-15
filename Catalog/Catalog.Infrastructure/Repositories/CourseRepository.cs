@@ -5,14 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Infrastructure.Repositories;
 
-public class CourseRepository : BaseRepository<Course>, ICourseRepository
+public class CourseRepository(CatalogDbContext context) : BaseRepository<Course>(context), ICourseRepository
 {
-    private protected CatalogDbContext catalogContext;
-
-    public CourseRepository(CatalogDbContext context) : base(context)
-    {
-        catalogContext = context;
-    }
+    private protected CatalogDbContext catalogContext = context;
 
     public async override Task<Course> AddAsync(Course entity, CancellationToken token)
     {
@@ -33,13 +28,6 @@ public class HomeworkRepository : BaseRepository<Homework>, IHomeworkRepository
 public class NoteRepository : BaseRepository<Note>, INoteRepository
 {
     public NoteRepository(CatalogDbContext context) : base(context)
-    {
-    }
-}
-
-public class SessionRepository : BaseRepository<Session>, ISessionRepository
-{
-    public SessionRepository(CatalogDbContext context) : base(context)
     {
     }
 }

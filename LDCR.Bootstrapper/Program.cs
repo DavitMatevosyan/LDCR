@@ -46,7 +46,8 @@ if (app.Environment.IsDevelopment())
 
 foreach (var moduleConfig in modules)
 {
-    moduleConfig.ConfigureMiddlewares(app);
+
+    moduleConfig.ConfigureGlobalMiddlewares(app);
 }
 
 app.Run();

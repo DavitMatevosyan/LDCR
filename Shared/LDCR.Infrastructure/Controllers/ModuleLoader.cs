@@ -33,7 +33,7 @@ public class ModuleLoader(IConfiguration configuration)
             if (moduleConfig != null)
             {
                 var module = (BaseModule)Activator.CreateInstance(moduleType)!;
-                module.ModuleSettings = moduleConfig;
+                module.Settings = moduleConfig;
 
                 yield return module;
             }
