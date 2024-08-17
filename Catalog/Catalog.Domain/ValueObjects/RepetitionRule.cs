@@ -1,17 +1,20 @@
 ﻿namespace Catalog.Domain.ValueObjects;
 
+[Flags]
 public enum RepetitionRule
 {
-    None = 0,
+    Unknown = 0,
     Monday = 1,
     Tuesday = 2,
-    Wednesday = 4, 
+    Wednesday = 4,
     Thursday = 8,
     Friday = 16,
     Saturday = 32,
     Sunday = 64,
 
-    WeekDays = 31,
-    Weekends = 96,
-    Everyday = 127
+    WeekDays = Monday | Tuesday | Wednesday | Thursday | Friday,
+    WeekOddDays = Monday | Wednesday | Friday,
+    WeekEvenDays = Tuesday | Thursday,
+    Weekends = Saturday | Sunday,
+    Everyday = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
 }

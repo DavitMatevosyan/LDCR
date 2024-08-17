@@ -12,14 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Catalog.Infrastructure.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20240815164356_init")]
-    partial class init
+    [Migration("20240817111634_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("Catalog")
                 .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -69,7 +70,7 @@ namespace Catalog.Infrastructure.Migrations
 
                     b.HasIndex("Code");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", "Catalog");
 
                     b.HasData(
                         new
@@ -119,6 +120,7 @@ namespace Catalog.Infrastructure.Migrations
             modelBuilder.Entity("Catalog.Domain.Models.Homework", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AcceptanceCriteria")
@@ -152,7 +154,9 @@ namespace Catalog.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Homework");
+                    b.HasIndex("SessionId");
+
+                    b.ToTable("Homeworks", "Catalog");
 
                     b.HasData(
                         new
@@ -160,7 +164,7 @@ namespace Catalog.Infrastructure.Migrations
                             Id = new Guid("98030dcf-df14-4cf3-a0c4-47062adce75a"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Sample Note 1",
+                            Description = "Sample Homework 1",
                             IsObsolete = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -172,7 +176,7 @@ namespace Catalog.Infrastructure.Migrations
                             Id = new Guid("0774b0b6-6dac-4bf4-b4ce-023491f81a71"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Sample Note 2",
+                            Description = "Sample Homework 2",
                             IsObsolete = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -184,7 +188,7 @@ namespace Catalog.Infrastructure.Migrations
                             Id = new Guid("17aef592-7b32-4330-b21d-31f53a530c7b"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Sample Note 3",
+                            Description = "Sample Homework 3",
                             IsObsolete = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -196,7 +200,7 @@ namespace Catalog.Infrastructure.Migrations
                             Id = new Guid("f07004aa-4feb-48a4-ada5-2c49bc37d5e0"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Sample Note 1",
+                            Description = "Sample Homework 1",
                             IsObsolete = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -208,7 +212,7 @@ namespace Catalog.Infrastructure.Migrations
                             Id = new Guid("57b2c785-55f5-4b08-b2c0-6e6b71724000"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Sample Note 2",
+                            Description = "Sample Homework 2",
                             IsObsolete = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -220,7 +224,7 @@ namespace Catalog.Infrastructure.Migrations
                             Id = new Guid("e84fd466-c932-486f-a482-b0d6c2885dab"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Sample Note 3",
+                            Description = "Sample Homework 3",
                             IsObsolete = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -232,6 +236,7 @@ namespace Catalog.Infrastructure.Migrations
             modelBuilder.Entity("Catalog.Domain.Models.Note", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CreatedBy")
@@ -258,7 +263,9 @@ namespace Catalog.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notes");
+                    b.HasIndex("SessionId");
+
+                    b.ToTable("Notes", "Catalog");
 
                     b.HasData(
                         new
@@ -337,12 +344,11 @@ namespace Catalog.Infrastructure.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("Topic")
-                        .IsUnique();
+                    b.HasIndex("Topic");
 
                     SqlServerIndexBuilderExtensions.IsClustered(b.HasIndex("Topic"), false);
 
-                    b.ToTable("Sessions");
+                    b.ToTable("Sessions", "Catalog");
 
                     b.HasData(
                         new
@@ -441,6 +447,7 @@ namespace Catalog.Infrastructure.Migrations
             modelBuilder.Entity("Catalog.Domain.Models.SessionReference", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Reference")
@@ -451,7 +458,9 @@ namespace Catalog.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SessionReferences");
+                    b.HasIndex("SessionId");
+
+                    b.ToTable("SessionReferences", "Catalog");
 
                     b.HasData(
                         new
@@ -484,9 +493,8 @@ namespace Catalog.Infrastructure.Migrations
                 {
                     b.HasOne("Catalog.Domain.Models.Session", "Session")
                         .WithMany("Homeworks")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Session");
                 });
@@ -495,9 +503,8 @@ namespace Catalog.Infrastructure.Migrations
                 {
                     b.HasOne("Catalog.Domain.Models.Session", "Session")
                         .WithMany("Notes")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Session");
                 });
@@ -516,7 +523,7 @@ namespace Catalog.Infrastructure.Migrations
                 {
                     b.HasOne("Catalog.Domain.Models.Session", "Session")
                         .WithMany("SessionReferences")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -44,4 +44,7 @@ public class BaseRepository<T>(ModuleDbContext context) : IBaseRepository<T> whe
 
         context.Set<T>().Update(newItem);
     }
+
+    public virtual async Task<int> SaveChangesAsync()
+        => await context.SaveChangesAsync();
 }

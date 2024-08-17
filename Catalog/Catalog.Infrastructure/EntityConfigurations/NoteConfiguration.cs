@@ -11,8 +11,7 @@ internal class NoteConfiguration : IEntityTypeConfiguration<Note>
         builder.HasKey(x => x.Id);
 
         builder.HasOne(x => x.Session)
-            .WithMany(x => x.Notes)
-            .HasForeignKey(x => x.Id);
+            .WithMany(x => x.Notes);
 
 
         builder.HasData(SeedData());

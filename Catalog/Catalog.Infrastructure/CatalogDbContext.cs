@@ -15,11 +15,13 @@ public class CatalogDbContext : ModuleDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.ApplyConfiguration(new CourseConfiguration());
         modelBuilder.ApplyConfiguration(new SessionConfiguration());
         modelBuilder.ApplyConfiguration(new SessionReferenceConfiguration());
-        modelBuilder.ApplyConfiguration(new NoteConfiguration());
         modelBuilder.ApplyConfiguration(new HomeworkConfiguration());
+        modelBuilder.ApplyConfiguration(new NoteConfiguration());
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -29,6 +31,7 @@ public class CatalogDbContext : ModuleDbContext
 
     public DbSet<Course> Courses { get; set; } = null!;
     public DbSet<Session> Sessions { get; set; } = null!;
-    public DbSet<SessionReference> SessionReferences { get; set; } = null!;
+    public DbSet<SessionReference> SessionReferences { get; set; }
+    public DbSet<Homework> Homeworks { get; set; }
     public DbSet<Note> Notes { get; set; }
 }

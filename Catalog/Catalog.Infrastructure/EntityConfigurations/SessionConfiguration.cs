@@ -11,7 +11,7 @@ internal class SessionConfiguration : IEntityTypeConfiguration<Session>
         builder.HasKey(x => x.Id);
 
         builder.HasIndex(x => x.Topic)
-            .IsUnique()
+            .IsUnique(false)
             .IsClustered(false);
 
         builder.Property(x => x.Topic)

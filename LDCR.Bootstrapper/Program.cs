@@ -1,5 +1,5 @@
-using LDCR.Infrastructure.Controllers;
 using LDCR.Infrastructure.Extensions;
+using LDCR.Infrastructure.Modules;
 using LDCR.Shared.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +22,8 @@ builder.Services.AddProblemDetails(options =>
 {
     options.CustomizeProblemDetails = context =>
     {
-        context.ProblemDetails.Extensions.Add("asd", "qweqwe");
+        context.ProblemDetails.Extensions.Add("Details", context.AdditionalMetadata);
+        context.ProblemDetails.Extensions.Add("Details1", context.Exception?.Message);
         //context.ProblemDetails.Extensions["TraceId"] = context.HttpContext.TraceIdentifier;
 
         //;
@@ -46,7 +47,6 @@ if (app.Environment.IsDevelopment())
 
 foreach (var moduleConfig in modules)
 {
-
     moduleConfig.ConfigureGlobalMiddlewares(app);
 }
 

@@ -1,9 +1,8 @@
 ﻿using LDCR.Domain.Exceptions;
-using LDCR.Infrastructure.Modules;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
-namespace LDCR.Infrastructure.Controllers;
+namespace LDCR.Infrastructure.Modules;
 
 public class ModuleLoader(IConfiguration configuration)
 {

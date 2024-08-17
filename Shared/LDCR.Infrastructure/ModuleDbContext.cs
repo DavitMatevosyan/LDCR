@@ -1,4 +1,5 @@
 ﻿using LDCR.Domain.BaseEntities;
+using LDCR.Infrastructure.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -19,7 +20,8 @@ public class ModuleDbContext(DbContextOptions opts, IConfiguration configuration
         {
             options.MigrationsHistoryTable("EFMigrationHistory", Schema);
             options.MigrationsAssembly($"{Schema}.Infrastructure");
-        });
+        })
+            .AddInterceptors(new EntityAuditInterceptor());
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,23 +34,8 @@ public class ModuleDbContext(DbContextOptions opts, IConfiguration configuration
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        var toBeAudited = this.ChangeTracker.Entries().Where(x => x.State != EntityState.Unchanged && x.Entity is AuditableEntity);
-        foreach (var entry in toBeAudited)
-        {
-            if (entry.State == EntityState.Added)
-            {
-
-            }
-            else if (entry.State == EntityState.Modified)
-            {
-
-            }
-            else if (entry.State == EntityState.Deleted)
-            {
-
-            }
-        }
-
         return base.SaveChangesAsync(cancellationToken);
     }
+
+    public DbSet<AuditableEntity> EntityAudits { get; set; }
 }

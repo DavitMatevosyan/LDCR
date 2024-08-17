@@ -45,4 +45,10 @@ public interface IBaseRepository<T> where T : EntityModel
     /// <param name="newItem">Updated item</param>
     /// <param name="token">Cancellation Token</param>
     Task UpdateAsync(Guid id, T newItem, CancellationToken token);
+
+    /// <summary>
+    /// Saves all changed entries
+    /// </summary>
+    /// <returns>returns the number of rows modified</returns>
+    Task<int> SaveChangesAsync();
 }

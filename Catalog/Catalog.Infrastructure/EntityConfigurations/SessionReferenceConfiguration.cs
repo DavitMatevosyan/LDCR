@@ -11,8 +11,7 @@ internal class SessionReferenceConfiguration : IEntityTypeConfiguration<SessionR
         builder.HasKey(x => x.Id);
 
         builder.HasOne(x => x.Session)
-            .WithMany(x => x.SessionReferences)
-            .HasForeignKey(x => x.Id);
+            .WithMany(x => x.SessionReferences);
 
         builder.HasData(SeedData());
     }
