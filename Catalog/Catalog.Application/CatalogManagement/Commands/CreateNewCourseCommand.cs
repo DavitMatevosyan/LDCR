@@ -1,8 +1,11 @@
-﻿using Catalog.Domain.Models;
+﻿using Catalog.Application.Dtos;
+using Catalog.Domain.Models;
 using Catalog.Domain.RepositoryContracts;
 using Catalog.Domain.ValueObjects;
 using LDCR.Shared;
+using LDCR.Shared.Exceptions;
 using LDCR.Shared.Results;
+using Mapster;
 using MediatR;
 
 namespace Catalog.Application.CatalogManagement.Commands;
@@ -30,10 +33,10 @@ public class CreateNewCourseCommandHandler(ICourseRepository courseRepository) :
         var canParseStartDateDOW = Enum.TryParse<RepetitionRule>(request.StartDate.DayOfWeek.ToString(), out RepetitionRule startDateDOW);
 
         if (!canParseStartDateDOW || startDateDOW == RepetitionRule.Unknown)
-            throw new InvalidDataException("Can't parse given date to weekday");
+            throw new ValidationException("Can't parse given date to weekday");
 
         if ((startDateDOW & request.RepetitionRule) == RepetitionRule.Unknown)
-            throw new InvalidDataException("The given start day doesn't fit in the repetition rules");
+            throw new ValidationException("The given start day doesn't fit in the repetition rules", (request.RepetitionRule.ToString(), request.StartDate.ToString()));
 
         var sessions = new List<Session>();
 
@@ -64,6 +67,8 @@ public class CreateNewCourseCommandHandler(ICourseRepository courseRepository) :
         await courseRepository.AddAsync(course, cancellationToken);
 
         await courseRepository.SaveChangesAsync();
+
+        result.Result = course.Adapt<CourseDto>();
 
         return result;
     }

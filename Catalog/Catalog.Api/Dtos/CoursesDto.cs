@@ -1,4 +1,5 @@
 ﻿using Catalog.Application.CatalogManagement.Commands;
+using Catalog.Domain.Models;
 using Catalog.Domain.ValueObjects;
 using LDCR.Shared;
 using System.ComponentModel.DataAnnotations;

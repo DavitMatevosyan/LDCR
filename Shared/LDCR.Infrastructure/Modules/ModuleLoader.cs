@@ -1,5 +1,6 @@
-﻿using LDCR.Domain.Exceptions;
+﻿using LDCR.Shared.Exceptions;
 using Microsoft.Extensions.Configuration;
+using System.Net;
 using System.Reflection;
 
 namespace LDCR.Infrastructure.Modules;
@@ -11,8 +12,10 @@ public class ModuleLoader(IConfiguration configuration)
     public IEnumerable<BaseModule> LoadModules()
     {
         // convert to composite config class and base module class
-        var moduleSettings = configuration.GetSection("Modules").Get<List<ModuleSettings>>()
-                ?? throw new ConfigurationsNotFoundException("The configurations were not found");
+        var moduleSettings = configuration.GetSection("Modules").Get<List<ModuleSettings>>();
+
+        if (moduleSettings!.Count == 0)
+            throw new BaseException("The configurations were not found", (int)HttpStatusCode.NotImplemented);
 
         List<Assembly> modules = [];
         foreach (var module in moduleSettings)

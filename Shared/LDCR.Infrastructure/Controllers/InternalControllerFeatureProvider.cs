@@ -11,6 +11,9 @@ public class InternalControllerFeatureProvider : ControllerFeatureProvider
     /// </summary>
     protected override bool IsController(TypeInfo typeInfo)
     {
+        var x = typeInfo.Assembly;
+
+
         if (!typeInfo.IsClass) 
             return false;
         

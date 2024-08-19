@@ -18,6 +18,13 @@ public class CourseRepository(CatalogDbContext context) : BaseRepository<Course>
     }
 }
 
+
+
+
+
+
+
+// extract these into separate files
 public class HomeworkRepository : BaseRepository<Homework>, IHomeworkRepository
 {
     public HomeworkRepository(CatalogDbContext context) : base(context)

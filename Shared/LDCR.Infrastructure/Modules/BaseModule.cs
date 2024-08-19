@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
+﻿using LDCR.Infrastructure.Middlewares;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -11,6 +11,8 @@ public abstract class BaseModule
 
     public virtual void RegisterServices(WebApplicationBuilder builder)
     {
+        builder.Services.AddExceptionHandler<GlobalExceptionHandlerMiddleware>();
+
         if (Settings.DatabaseEnabled)
             AddDatabaseEngine(builder);
 
@@ -38,7 +40,10 @@ public abstract class BaseModule
         app.UseAuthorization();
         app.MapControllers();
 
-        app.Map($"/{Settings.Name}", ConfigureMiddlewares);
+        app.MapControllerRoute($"{Settings.Name} routes",
+            $"/api/{Settings.Name}");
+
+        app.Map($"/api/{Settings.Name}", ConfigureMiddlewares);
     }
 
     protected abstract void ConfigureMiddlewares(IApplicationBuilder app);

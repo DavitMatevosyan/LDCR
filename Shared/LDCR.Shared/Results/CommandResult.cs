@@ -2,7 +2,7 @@
 
 public class CommandResult
 {
-    public object Command { get; init; }
+    public object Result { get; set; }
     public FailureType FailureType { get; private set; }
     public List<string>? FailureReasons { get; private set; }
 
@@ -12,7 +12,7 @@ public class CommandResult
     /// <param name="command"></param>
     public CommandResult(object command)
     {
-        Command = command;
+        Result = command;
         FailureReasons ??= [];
         FailureType = FailureType.None;
     }
@@ -25,7 +25,7 @@ public class CommandResult
     /// <param name="failureReason"></param>
     public CommandResult(object command, FailureType failureType, List<string> failureReason)
     {
-        Command = command;
+        Result = command;
         FailureType = failureType;
         FailureReasons = failureReason;
     }

@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="CatalogManagement\EventHandlers\" />
     <Folder Include="CatalogManagement\QueryObjects\" />
-    <Folder Include="CatalogManagement\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
