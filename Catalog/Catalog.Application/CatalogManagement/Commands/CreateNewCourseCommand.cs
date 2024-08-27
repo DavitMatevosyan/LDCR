@@ -10,7 +10,7 @@ using MediatR;
 
 namespace Catalog.Application.CatalogManagement.Commands;
 
-public class CreateNewCourseCommand : BaseCommand<CreateNewCourseCommand, Course>, IRequest<CommandResult>
+public class CreateNewCourseCommand : BaseCommand<CreateNewCourseCommand, Course>, IRequest<CommandResult<CourseDto>>
 {
     public required string Name { get; set; }
     public required string Code { get; set; }
@@ -21,16 +21,16 @@ public class CreateNewCourseCommand : BaseCommand<CreateNewCourseCommand, Course
     public string? SessionDefaultTopic { get; set; }
 }
 
-public class CreateNewCourseCommandHandler(ICourseRepository courseRepository) : IRequestHandler<CreateNewCourseCommand, CommandResult>
+public class CreateNewCourseCommandHandler(ICourseRepository courseRepository) : IRequestHandler<CreateNewCourseCommand, CommandResult<CourseDto>>
 {
     private readonly ICourseRepository courseRepository = courseRepository;
 
-    public async Task<CommandResult> Handle(CreateNewCourseCommand request, CancellationToken cancellationToken)
+    public async Task<CommandResult<CourseDto>> Handle(CreateNewCourseCommand request, CancellationToken cancellationToken)
     {
         var courseId = Guid.NewGuid();
-        var result = new CommandResult(request);
+        var result = new CommandResult<CourseDto>();
 
-        var canParseStartDateDOW = Enum.TryParse<RepetitionRule>(request.StartDate.DayOfWeek.ToString(), out RepetitionRule startDateDOW);
+        var canParseStartDateDOW = Enum.TryParse(request.StartDate.DayOfWeek.ToString(), out RepetitionRule startDateDOW);
 
         if (!canParseStartDateDOW || startDateDOW == RepetitionRule.Unknown)
             throw new ValidationException("Can't parse given date to weekday");

@@ -7,7 +7,7 @@ namespace LDCR.Infrastructure.Controllers;
 
 public static class ResultUtils
 {
-    public static IActionResult ConvertToProblem(this CommandResult command)
+    public static IActionResult ConvertToProblem<T>(this CommandResult<T> command)
     {
         var extensions = new Dictionary<string, object>();
         if (command.FailureReasons is not null && command.FailureReasons.Any())

@@ -2,7 +2,6 @@
 using LDCR.Infrastructure.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.Diagnostics;
 
 namespace LDCR.Shared.Infrastructure;
 
@@ -29,6 +28,8 @@ public class ModuleDbContext(DbContextOptions opts, IConfiguration configuration
     {
         if (!string.IsNullOrEmpty(Schema))
             modelBuilder.HasDefaultSchema(Schema);
+
+        modelBuilder.Ignore<AuditableEntity>();
 
         base.OnModelCreating(modelBuilder);
     }
