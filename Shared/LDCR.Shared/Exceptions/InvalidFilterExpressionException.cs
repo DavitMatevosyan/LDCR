@@ -4,8 +4,7 @@ using System.Net;
 
 namespace LDCR.Shared.Exceptions;
 
-public class InvalidFilterExpressionException<E> 
-    : BaseException 
+public class InvalidFilterExpressionException<E> : BaseException 
     where E : EntityModel
 {
     public InvalidFilterExpressionException(Expression<Func<E, bool>> filterExpression, params (string Key, string Value)[] extensionParams) 
@@ -17,3 +16,5 @@ public class InvalidFilterExpressionException<E>
             Extensions.Add(param.Type.Name, param?.Name!);
     }
 }
+
+public class NotImplementedExpressionForTypeException() : BaseException("Expression is not implemented for given type", (int)HttpStatusCode.BadRequest);

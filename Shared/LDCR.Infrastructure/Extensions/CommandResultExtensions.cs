@@ -1,16 +1,15 @@
 ﻿using LDCR.Shared.Results;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace LDCR.Infrastructure.Controllers;
+namespace LDCR.Infrastructure.Extensions;
 
-public static class ResultUtils
+public static class CommandResultExtensions
 {
     public static IActionResult ConvertToProblem<T>(this CommandResult<T> command)
     {
         var extensions = new Dictionary<string, object>();
-        if (command.FailureReasons is not null && command.FailureReasons.Any())
+        if (command.FailureReasons is not null && command.FailureReasons.Count != 0)
         {
             for (int i = 1; i <= command.FailureReasons.Count; i++)
             {

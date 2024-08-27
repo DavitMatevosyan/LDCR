@@ -3,8 +3,7 @@ using Catalog.Application.CatalogManagement.Queries;
 using Catalog.Application.Dtos;
 using Catalog.Application.Filters;
 using Catalog.Web.Dtos;
-using LDCR.Infrastructure.Controllers;
-using LDCR.Shared.Results;
+using LDCR.Infrastructure.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -37,7 +36,8 @@ public class CourseController(IMediator mediator) : ApiController(mediator)
 
         var result = await mediator.Send(query);
 
-        //if(!result)
+        //if(result.Courses is null)
+        //    return result.
 
 
 

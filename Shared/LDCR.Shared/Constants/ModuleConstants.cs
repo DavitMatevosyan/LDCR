@@ -2,5 +2,5 @@
 
 public static class ModuleConstants
 {
-    public const string Catalog = "Catalog";
+    public const string Catalog = nameof(Catalog);
 }
