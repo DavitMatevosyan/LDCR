@@ -1,7 +1,10 @@
 ﻿using Catalog.Application.CatalogManagement.Commands;
+using Catalog.Application.CatalogManagement.Queries;
 using Catalog.Application.Dtos;
+using Catalog.Application.Filters;
 using Catalog.Web.Dtos;
 using LDCR.Infrastructure.Controllers;
+using LDCR.Shared.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -28,8 +31,16 @@ public class CourseController(IMediator mediator) : ApiController(mediator)
 
     [HttpGet("Course")]
     [ProducesResponseType(typeof(IEnumerable<CourseDto>), (int)HttpStatusCode.OK)]
-    public async Task<IActionResult> GetCourses()
+    public async Task<IActionResult> GetCourses([FromQuery] CourseFilter filter)
     {
-        throw new NotImplementedException();
+        var query = new GetCoursesQuery(filter);
+
+        var result = await mediator.Send(query);
+
+        //if(!result)
+
+
+
+        return Ok(result);
     }
 }

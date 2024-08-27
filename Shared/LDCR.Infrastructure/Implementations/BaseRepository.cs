@@ -14,14 +14,16 @@ public class BaseRepository<T>(ModuleDbContext context) : IBaseRepository<T> whe
         => await context
             .Set<T>()
             .AsTracking(asNoTracking ? QueryTrackingBehavior.NoTracking : QueryTrackingBehavior.TrackAll)
-            .FirstOrDefaultAsync(x => x.Id == id, token) 
+            .FirstOrDefaultAsync(x => x.Id == id, token)
                 ?? throw new KeyNotFoundException($"The entity with given id: {id} is not found");
 
-    public async virtual Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate, bool asNoTracking = false, CancellationToken token = default)
+    public async virtual Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate, int page, int pageSize, bool asNoTracking = false, CancellationToken token = default)
         => await context
             .Set<T>()
             .AsTracking(asNoTracking ? QueryTrackingBehavior.NoTracking : QueryTrackingBehavior.TrackAll)
             .Where(predicate)
+            .Skip(pageSize * (page - 1))
+            .Take(pageSize)
             .ToListAsync(token)
                 ?? throw new KeyNotFoundException($"The entity with given predicate is not found");
 

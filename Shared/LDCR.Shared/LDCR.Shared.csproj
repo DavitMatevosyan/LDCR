@@ -14,4 +14,8 @@
     <Folder Include="Mappings\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LDCR.Domain\LDCR.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

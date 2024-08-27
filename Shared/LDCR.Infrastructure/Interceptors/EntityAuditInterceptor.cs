@@ -49,7 +49,7 @@ public class EntityAuditInterceptor : SaveChangesInterceptor
             }
         }
 
-        if(eventData.Context is ModuleDbContext dbContext) 
+        if (eventData.Context is ModuleDbContext dbContext)
             dbContext.EntityAudits.AddRange(toBeAuditedEntityList);
 
         return await base.SavingChangesAsync(eventData, result, cancellationToken);

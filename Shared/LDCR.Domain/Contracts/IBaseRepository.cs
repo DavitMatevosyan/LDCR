@@ -21,7 +21,7 @@ public interface IBaseRepository<T> where T : EntityModel
     /// <param name="asNoTracking">if the item needs to be tracked</param>
     /// <param name="token">Cancellation Token</param>
     /// <returns>Items satisfying the given <paramref name="predicate"/></returns>
-    Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate, bool asNoTracking = false, CancellationToken token = default);
+    Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate, int page, int pageSize, bool asNoTracking = false,  CancellationToken token = default);
 
     /// <summary>
     /// Add <paramref name="entity"/> to Database

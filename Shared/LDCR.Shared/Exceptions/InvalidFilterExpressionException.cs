@@ -1,12 +1,14 @@
-﻿using LDCR.Shared.Results;
+﻿using LDCR.Domain.BaseEntities;
 using System.Linq.Expressions;
 using System.Net;
 
 namespace LDCR.Shared.Exceptions;
 
-public class InvalidFilterExpressionException<T> : BaseException where T : IFilter
+public class InvalidFilterExpressionException<E> 
+    : BaseException 
+    where E : EntityModel
 {
-    public InvalidFilterExpressionException(Expression<Func<T, bool>> filterExpression, params (string Key, string Value)[] extensionParams) 
+    public InvalidFilterExpressionException(Expression<Func<E, bool>> filterExpression, params (string Key, string Value)[] extensionParams) 
         : base("Invalid Expression", (int)HttpStatusCode.BadRequest, extensionParams)
     {
         Extensions.Add("Name", filterExpression.Name!);

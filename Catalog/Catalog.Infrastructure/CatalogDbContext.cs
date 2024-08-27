@@ -1,5 +1,6 @@
 ﻿using Catalog.Domain.Models;
 using Catalog.Infrastructure.EntityConfigurations;
+using LDCR.Shared.Constants;
 using LDCR.Shared.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +11,7 @@ public class CatalogDbContext : ModuleDbContext
 {
     public CatalogDbContext(DbContextOptions opts, IConfiguration configuration) : base(opts, configuration)
     {
-        Schema = "Catalog";
+        Schema = ModuleConstants.Catalog;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

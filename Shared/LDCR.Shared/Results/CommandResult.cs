@@ -1,8 +1,8 @@
 ﻿namespace LDCR.Shared.Results;
 
-public class CommandResult
+public class CommandResult<T> where T : new()
 {
-    public object Result { get; set; }
+    public T Result { get; set; }
     public FailureType FailureType { get; private set; }
     public List<string>? FailureReasons { get; private set; }
 
@@ -10,9 +10,9 @@ public class CommandResult
     /// Success Constructor
     /// </summary>
     /// <param name="command"></param>
-    public CommandResult(object command)
+    public CommandResult(T result)
     {
-        Result = command;
+        Result = result;
         FailureReasons ??= [];
         FailureType = FailureType.None;
     }
@@ -20,12 +20,12 @@ public class CommandResult
     /// <summary>
     /// Failure Constructor
     /// </summary>
-    /// <param name="command"></param>
+    /// <param name="result"></param>
     /// <param name="failureType"></param>
     /// <param name="failureReason"></param>
-    public CommandResult(object command, FailureType failureType, List<string> failureReason)
+    public CommandResult(T result, FailureType failureType, List<string> failureReason)
     {
-        Result = command;
+        Result = result;
         FailureType = failureType;
         FailureReasons = failureReason;
     }

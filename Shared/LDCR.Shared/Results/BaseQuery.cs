@@ -1,42 +1,75 @@
-﻿using LDCR.Shared.Exceptions;
+﻿using LDCR.Domain.BaseEntities;
+using LDCR.Shared.Exceptions;
 using System.Linq.Expressions;
 using System.Reflection;
 
 namespace LDCR.Shared.Results;
 
-public abstract class BaseQuery<T> where T : IFilter
+public class BaseQuery<T, E> where T : FilterModel where E : EntityModel
 {
     public int Page { get; init; }
     public int PageSize { get; init; }
-    protected Expression<Func<T, bool>>? FilterExpression { get; init; }
 
-    public Func<T, bool> Predicate =>
-        FilterExpression?.Compile() ?? throw new InvalidFilterExpressionException<T>(FilterExpression!);
+    public Expression<Func<E, bool>> FilterExpression { get; init; }
 
-    protected virtual Expression<Func<T, bool>> BuildFilterExpression(T filter)
+    public BaseQuery(T filter)
     {
-        if (filter == null)
-            return t => true;
+        Page = filter.Page;
+        PageSize = filter.PageSize;
+        FilterExpression = BuildFilterExpression(filter);
+    }
 
-        ParameterExpression parameter = Expression.Parameter(typeof(T), "filter");
-        Expression expression = Expression.Constant(true);
 
-        var properties = filter.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-        foreach (var property in properties)
+    protected virtual Expression<Func<E, bool>> BuildFilterExpression(T filter)
+    {
+        try
         {
-            // add condition checks for int - string - datetime - in child expression add RepetitionRule - timespan
+            if (filter == null)
+                return t => true;
 
-            MemberExpression prop = Expression.Property(parameter, property.Name);
-            ConstantExpression value = Expression.Constant(property.GetValue(filter));
-            BinaryExpression condition = Expression.Equal(prop, value);
+            ParameterExpression parameter = Expression.Parameter(typeof(E), "filter");
+            Expression expression = Expression.Constant(true);
 
-            expression = Expression.AndAlso(expression, condition);
+            var properties = filter.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var property in properties)
+            {
+                // add condition checks for int - string - datetime - in child expression add RepetitionRule - timespan
+                if (property.GetValue(filter) is null)
+                    continue;
+
+                var filterType = property.GetCustomAttribute<FilterAttribute>(false);
+
+                if (filterType is null)
+                    continue;
+
+                MemberExpression prop = Expression.Property(parameter, property.Name);
+                ConstantExpression value = Expression.Constant(property.GetValue(filter));
+
+                Expression condition;
+
+                if (prop.Type.IsGenericType && prop.Type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                {
+                    var nullableValue = Expression.Convert(value, prop.Type);
+                    condition = filterType.GetExpression(prop, nullableValue);
+                }
+                else
+                {
+                    condition = filterType.GetExpression(prop, value);
+                }
+
+                expression = Expression.AndAlso(expression, condition);
+            }
+
+            Expression<Func<E, bool>> lambda = Expression.Lambda<Func<E, bool>>(expression, parameter);
+
+            return lambda;
         }
-
-        Expression<Func<T, bool>> lambda = Expression.Lambda<Func<T, bool>>(expression, parameter);
-
-        return lambda;
+        catch (Exception)
+        {
+            // add logger log
+            throw new InvalidFilterExpressionException<E>(FilterExpression);
+        }
     }
 }
 

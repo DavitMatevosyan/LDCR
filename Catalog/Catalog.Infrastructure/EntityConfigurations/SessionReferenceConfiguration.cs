@@ -8,8 +8,6 @@ internal class SessionReferenceConfiguration : IEntityTypeConfiguration<SessionR
 {
     public void Configure(EntityTypeBuilder<SessionReference> builder)
     {
-        builder.HasKey(x => x.Id);
-
         builder.HasOne(x => x.Session)
             .WithMany(x => x.SessionReferences);
 

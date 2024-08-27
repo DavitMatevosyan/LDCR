@@ -2,6 +2,7 @@
 using LDCR.Infrastructure.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 
 namespace LDCR.Shared.Infrastructure;
 

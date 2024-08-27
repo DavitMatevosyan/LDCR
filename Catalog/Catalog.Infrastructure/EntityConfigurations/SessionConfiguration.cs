@@ -8,8 +8,6 @@ internal class SessionConfiguration : IEntityTypeConfiguration<Session>
 {
     public void Configure(EntityTypeBuilder<Session> builder)
     {
-        builder.HasKey(x => x.Id);
-
         builder.HasIndex(x => x.Topic)
             .IsUnique(false)
             .IsClustered(false);
