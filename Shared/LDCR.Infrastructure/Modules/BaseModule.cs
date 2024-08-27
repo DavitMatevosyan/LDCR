@@ -40,10 +40,10 @@ public abstract class BaseModule
         app.UseAuthorization();
         app.MapControllers();
 
-        app.MapControllerRoute($"{Settings.Name} routes",
-            $"/api/{Settings.Name}");
+        app.MapControllerRoute($"{Settings.Name}Routes",
+            $"/{Settings.Name}");
 
-        app.Map($"/api/{Settings.Name}", ConfigureMiddlewares);
+        app.Map($"/{Settings.Name}", ConfigureMiddlewares);
     }
 
     protected abstract void ConfigureMiddlewares(IApplicationBuilder app);

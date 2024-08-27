@@ -29,6 +29,8 @@ public class ModuleDbContext(DbContextOptions opts, IConfiguration configuration
         if (!string.IsNullOrEmpty(Schema))
             modelBuilder.HasDefaultSchema(Schema);
 
+        modelBuilder.Ignore<AuditableEntity>();
+
         base.OnModelCreating(modelBuilder);
     }
 

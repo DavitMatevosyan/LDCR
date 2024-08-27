@@ -8,8 +8,6 @@ internal class CourseConfiguration : IEntityTypeConfiguration<Course>
 {
     public void Configure(EntityTypeBuilder<Course> builder)
     {
-        builder.HasKey(x => x.Id);
-
         builder.Property(x => x.Code)
             .IsRequired()
             .HasMaxLength(5);
@@ -24,7 +22,9 @@ internal class CourseConfiguration : IEntityTypeConfiguration<Course>
             .WithOne(x => x.Course)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasData(SeedData());
+        var data = SeedData();
+
+        builder.HasData(data);
     }
 
     private static List<Course> SeedData()

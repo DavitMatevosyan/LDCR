@@ -8,8 +8,6 @@ internal class HomeworkConfiguration : IEntityTypeConfiguration<Homework>
 {
     public void Configure(EntityTypeBuilder<Homework> builder)
     {
-        builder.HasKey(x => x.Id);
-
         builder.HasOne(x => x.Session)
             .WithMany(x => x.Homeworks);
 

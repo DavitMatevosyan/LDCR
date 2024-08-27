@@ -8,8 +8,6 @@ internal class NoteConfiguration : IEntityTypeConfiguration<Note>
 {
     public void Configure(EntityTypeBuilder<Note> builder)
     {
-        builder.HasKey(x => x.Id);
-
         builder.HasOne(x => x.Session)
             .WithMany(x => x.Notes);
 

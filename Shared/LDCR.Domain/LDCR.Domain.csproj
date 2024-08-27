@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\LDCR.Shared\LDCR.Shared.csproj" />
-  </ItemGroup>
-
 </Project>

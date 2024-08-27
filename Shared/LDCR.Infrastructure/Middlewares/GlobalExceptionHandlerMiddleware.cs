@@ -7,9 +7,6 @@ namespace LDCR.Infrastructure.Middlewares;
 
 public class GlobalExceptionHandlerMiddleware : IExceptionHandler
 {
-    // add logger
-    // add improvements on how the extensions are used
-
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         var details = new ProblemDetails

@@ -40,6 +40,5 @@ public class ModuleLoader(IConfiguration configuration)
                 yield return module;
             }
         }
-
     }
 }

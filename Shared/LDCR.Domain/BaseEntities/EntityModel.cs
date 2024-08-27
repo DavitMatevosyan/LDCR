@@ -1,6 +1,6 @@
 ﻿namespace LDCR.Domain.BaseEntities;
 
-public class EntityModel
+public abstract class EntityModel
 {
-    public Guid Id { get; set; }
+    public virtual Guid Id { get; set; }
 }
